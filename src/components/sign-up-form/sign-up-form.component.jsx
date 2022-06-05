@@ -10,12 +10,12 @@ const defaultFormFields = {
   displayName: '',
   email: '',
   password: '',
-  confirmPasword: ''
+  confirmPassword: ''
 };
 
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPasword } = formFields;
+  const { displayName, email, password, confirmPassword } = formFields;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -25,7 +25,7 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPasword) {
+    if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
@@ -34,7 +34,7 @@ const SignUpForm = () => {
       await createUserDocumentFromAuth(user, { displayName });
       setFormFields(defaultFormFields);
     } catch (error) {
-      console.error('User creationencoutered an error', error);
+      console.error('User creation encoutered an error', error);
     }
   }
 
@@ -47,7 +47,7 @@ const SignUpForm = () => {
         <FormInput label="Display Name" required name="displayName" onChange={handleChange} value={displayName} />
         <FormInput label="Email" required name="email" onChange={handleChange} value={email} />
         <FormInput label="Password" required name="password" onChange={handleChange} value={password} type="password" />
-        <FormInput label="Confirm Password" required name="confirm-password" onChange={handleChange} value={confirmPasword} type="password" />
+        <FormInput label="Confirm Password" required name="confirmPassword" onChange={handleChange} value={confirmPassword} type="password" />
 
         <Button type="submit">Sign up</Button>
       </form>

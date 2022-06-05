@@ -1,5 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -24,12 +30,7 @@ export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (userAuth, additionalInformation) => {
   const userDocRef = doc(db, 'users', userAuth.uid);
-  console.log(userDocRef);
-
   const userSpanshot = await getDoc(userDocRef);
-  console.log('userSpanshot', userSpanshot);
-  console.log('userSpanshot', userSpanshot.exists());
-
 
   if (!userSpanshot.exists()) {
     const { displayName, email } = userAuth;
@@ -53,4 +54,10 @@ export const createAuthUserWithEmailandPassword = async (email, password) => {
   if (!email || !password) return;
 
   return createUserWithEmailAndPassword(auth, email, password)
+};
+
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+
+  return signInWithEmailAndPassword(auth, email, password)
 };
